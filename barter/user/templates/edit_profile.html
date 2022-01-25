@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+</head>
+<body>
+    <h1>Edit your profile</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        <div class="fullname">
+            fullname <input type="text" name="fullname" required id="fullname" value="{{ user.fullname }}">
+        </div>
+        <div class="phone">
+            phone <input type="text" name="phone" required id="phone" value="{{ user.phone }}">
+        </div>
+        <div class="profile_picture">
+            {% if user.profile_picture %}
+                <img src="{{ user.profile_picture.url }}" alt="Profile picture" style="width: 150px; height: 150px;">
+            {% endif %}
+            profile_picture <input type="file" name="profile_picture" accept="image/*" id="profile_picture">
+        </div>
+        <div class="bio">
+            bio <textarea name="bio" maxlength="250"  cols="40" rows="10" id="bio" >{{ user.bio }}</textarea>
+        </div>
+
+        {% csrf_token %}
+
+        <input type="submit" value="edit">
+    </form>
+</body>
+</html>
