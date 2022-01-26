@@ -1,0 +1,37 @@
+{% extends 'home.html' %}
+
+{% load static %}
+
+{% block middle %}
+    
+    <section class="middle">
+
+        <div class="back-button">
+            go back
+        </div>
+        
+        <div class="profile">
+            <img src="" alt="profile picture">
+            Name: {{ other.fullname }}
+            Username: {{ other.username }}
+            Bio: {{ other.bio }}
+        </div>
+
+        {% if not other.posts %}
+            <p><a href={% url 'others_profile' other.username %}> {{other.fullname|capfirst}}</a> don't have a post.</p>
+        {% else %}
+            
+            {% for post in other.posts.all %}
+                <div class="post" style="border-radius: 10px; box-shadow: 0 0 10px gray;">
+                    <div class="poster">Poster: {{ post.poster.fullname|capfirst}}</div>
+                    <div class="category">Category: {{ post.category|capfirst }} </div>
+                    <div class="name">Commodity Name: {{ post.commodity_name }}</div>
+                    <div class="description">Description: {{ post.description }}</div>
+                    <img src="{{ post.image.url }}" alt="post image" style="width: 150px; height: 150px;">
+                </div>
+            {% endfor %}
+        {% endif %}
+
+    </section>
+
+{% endblock middle %}

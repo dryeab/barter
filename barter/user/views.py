@@ -10,12 +10,11 @@ from django.template.loader import render_to_string
 from .forms import *
 from .models import *
 
-
 def signup(request):
 
     if request.POST:
         signup_form = SignupForm(request.POST)
-
+        
         if signup_form.is_valid():
 
             user = signup_form.save(commit=False)
@@ -49,16 +48,11 @@ def login_handler(request):
 
     return render(request, 'login.html', context={'error': error, 'username': username})
 
-# done
-
-
 @login_required
 def logout_handler(request):
     logout(request)
     return redirect('login')
 
-
-# done
 def check_username(request):
 
     try:
@@ -68,9 +62,6 @@ def check_username(request):
 
     return JsonResponse({'exists': True})
 
-# done
-
-
 def check_email(request):
 
     try:
@@ -79,8 +70,6 @@ def check_email(request):
         return JsonResponse({'exists': False})
 
     return JsonResponse({'exists': True})
-
-# done
 
 
 def check_code(request):
@@ -94,9 +83,6 @@ def check_code(request):
         is_correct = False
 
     return JsonResponse({'is_correct': is_correct})
-
-# done
-
 
 def send_code(request):
 
@@ -129,34 +115,9 @@ def send_code(request):
               html_message=html_message,
               )
 
-
-@login_required
-def edit_profile(request):
-
-    if request.POST:
-        form = EditProfileForm(request.POST, request.FILES, instance=request.user)
-
-        if form.is_valid():
-            cd = form.cleaned_data
-            user = request.user
-
-            user.username = cd['username']
-            user.fullname = cd['fullname']
-            user.phone = cd['phone']
-            user.profile_picture = cd['profile_picture']
-            user.bio = cd['bio']
-
-            user.save()
-
-            return redirect('home')
-
-    return render(request, 'edit_profile.html', context={'form': EditProfileForm(instance=request.user)})
-
-
 @login_required
 def delete_profile(request):
 
-    logout(request)
     request.user.delete()
-
+    
     return redirect('login')

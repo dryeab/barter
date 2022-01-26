@@ -1,23 +1,49 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Barter - Log In</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 <body>
-    <form action="" method="post">
-        {% if error %}
-            <div class="error">Your password and username doesn't match</div>
-        {% endif %}
-        <input type="text" name="username" id="username" placeholder="Enter your username" value="{{ username }}">
-        <br>
-        <input type="password" name="password" id="password" placeholder="Password">
-        <br>
-        <input type="submit" value="Sign in">
 
-        {% csrf_token %}
-    </form>
+    <header>
+        <img src="" alt="logo">
+    </header>
+
+    <main>
+        <form action="" method="post">
+
+            <h1>Sign in</h1>
+
+            <div class="username">
+                <input type="text" name="username" id="username" placeholder="Username" value="{{ username }}" required>
+            </div>
+            
+            <div class="password">
+                <input type="password" name="password" id="password" placeholder="Password" required>
+            </div>
+
+            {% if error %}
+                <div class="error">Your password and username doesn't match</div>
+            {% endif %}
+
+            <input type="submit" value="Sign in">
+
+            <div class="sign-up">
+                <p>Don't have an account? <a href={% url 'signup' %}>Sign up</a></p>
+            </div>
+            
+            {% csrf_token %}
+        </form>
+    </main>
+
+    <footer>
+        &copy; 2022, Barter, All Rights Reserved.
+    </footer>
 </body>
 </html>

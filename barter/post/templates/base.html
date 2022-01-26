@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{user.fullname|capfirst}}{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    {% block stylesheets %}{% endblock stylesheets %}
+</head>
+<body>
+    <header style="background: gray;">
+        <div class="logo">
+            <img src="" alt="Barter">
+        </div>
+        <div class="profile">
+            <img src="" alt="profile picture">
+            <a href={% url 'others_profile' user.username %}>{{user.username}}</a>
+        </div>
+        <div class="humberger">
+            humberger
+        </div>
+    </header>
+
+    <main>
+        {% block main_content %}{% endblock main_content %}
+    </main>
+
+    <footer style="background: gray;">
+        &copy; 2022, Barter. All Rights Reserved.
+    </footer>
+    <script src="{% static 'js/base.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    {% block scripts %}{% endblock scripts %}
+</body>
+</html>

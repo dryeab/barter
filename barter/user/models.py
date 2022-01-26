@@ -1,7 +1,7 @@
 from django.db import models
 
-from django.contrib.auth.models import AbstractBaseUser, UserManager
-
+from django.contrib.auth.models import AbstractBaseUser, UserManager, User
+from django.urls import reverse
 
 class User(AbstractBaseUser):
 
@@ -20,6 +20,12 @@ class User(AbstractBaseUser):
     EMAIL_FIELD = "email"
 
     REQUIRED_FIELDS = ["fullname", "email", "phone", "password"]
+
+    def get_absolute_url(self):
+        return reverse("others_profile", kwargs={"username": self.username})
+    
+    def __str__(self):
+        return self.fullname.title()
 
 
 class Verification(models.Model):

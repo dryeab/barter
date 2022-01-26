@@ -1,37 +1,61 @@
 from django.db import models
 
 from django.conf import settings
+from django.urls import reverse
 
+User = settings.AUTH_USER_MODEL
 
-# make sure this model is cofigured in the settings file of the project
-# User = settings.AUTH_USER_MODEL
+class Post(models.Model):
 
+    commodity_name = models.CharField(max_length=50)
+    description = models.TextField(max_length=500)
+    image = models.ImageField(upload_to="post/")
 
-# class Post(models.Model):
+    CATEGORIES = (
+        ('mobile', 'Mobile'),
+        ('electronics', 'Electronics'),
+        ('laptops', 'Laptop'),
+        ('cloth', 'Cloth'),
+        ('house_utensils', 'House Utensil'),
+        ('book', 'Book'),
+        ('other', 'Other')
+    )
 
-#     description = models.CharField(max_length=500)
-#     image = models.ImageField(upload_to="post/")
-#     category = models.CharField()
+    category = models.CharField(max_length=20,
+                                choices=CATEGORIES)
 
-#     poster = models.ForeignKey(
-#         User,
-#         on_delete=models.CASCADE,
-#         related_name="posts"
-#     )
+    posted_date = models.DateTimeField(auto_now_add=True)
 
+    poster = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="posts"
+    )
 
-# # request is created when the user hits the send request button
-# class Request(models.Model):
+    class Meta:
+        ordering = ('-posted_date',)
+    
+    def get_absolute_url(self):
+        return reverse("post_detail", kwargs={"id": self.id})
+    
+class Request(models.Model):
 
-#     sender = models.ForeignKey(User, on_delete=models.CASCADE,)
-#     receiver = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='+')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received')
 
-#     is_sent = models.BooleanField()
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent')
+    offered = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="+", default=1)
+    
+    STATUSES = (
+        ('accepted', 'accepted'),
+        ('pending', 'pending')
+    )
 
+    status = models.CharField(max_length=15,
+                              choices=STATUSES,
+                              default='pending')
 
-# # Notification is a collection of requests
-# # a read and accepted request can be deleted from the database
+    offered_date = models.DateTimeField(auto_now_add=True)
 
-# class Notifications(models.Model):
-
-#     receiver = models.ForeignKey(User)
+    class Meta:
+        ordering = ('-offered_date',)

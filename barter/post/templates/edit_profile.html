@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+
+{% block main_content %}
+
+    <section class="left">
+        <form action="" method="get">
+            <input type="search" name="search" id="search">
+            <input type="submit" value="Search" style="display: none;">
+        </form>
+        <h2>Categories</h2>
+        {% for _, category in categories %}
+            <p> {{category|capfirst}} </p>
+        {% endfor %}
+    </section>
+
+    {% block middle %}
+    
+        <section class="middle">
+
+            {% if not posts %}
+
+                <p>Your search did not match any posts.</p>
+                <p>Suggestions:</p>
+                <ul>
+                    <li>Make sure that all words are spelled correctly.</li>
+                    <li>Try different keywords.</li>
+                    <li>Try more general keywords.</li>
+                </ul>
+
+            {% else %}
+                
+                {% for post in posts %}
+                    <div class="post" style="border-radius: 10px; box-shadow: 0 0 10px gray;">
+                        <div class="poster">Poster: {{ post.poster.fullname|capfirst}}</div>
+                        <div class="category">Category: {{ post.category|capfirst }} </div>
+                        <div class="name">Commodity Name: {{ post.commodity_name }}</div>
+                        <div class="description">Description: {{ post.description }}</div>
+                        <img src="{{ post.image.url }}" alt="post image" style="width: 150px; height: 150px;">
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+        </section>
+
+    {% endblock middle %}
+
+
+    <section class="right" style="background: gray;">
+
+        <div class="offers">
+
+            {% for request in user.received.all %}
+
+                {% if request.status == 'pending' %}
+
+                    <div class="request">
+
+                        <p><a href={% url 'others_profile' request.sender.username %}>{{request.sender.fullname|capfirst}}</a> wants to exchange 
+                            <a href={% url 'post_detail' request.offered.id %}> {{request.offered.commodity_name }}</a>
+                            with
+                            <a href={% url 'post_detail' request.post.id %}> {{request.post.commodity_name }}</a>.
+                        </p>
+
+                       <form action="" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="request_id" value="{{ request.id }}">
+                            <button type="submit" name='submit' value="accept">ACCEPT</button>
+                            <button type="submit" name='submit' value="reject">REJECT</button>
+                       </form>
+                    </div>
+                {% endif %}
+            
+            {% endfor %}
+
+            {% for request in user.sent.all %}
+            
+                    {% if request.status == 'accepted' %}
+                        <div class="accepted">
+                            <a href={% url 'others_profile' request.post.poster.username %}>{{request.post.poster.fullname|capfirst}}</a> accepted your offer.
+                            <button>See Contact</button>
+                        </div>
+                    {% endif %}
+
+            {% endfor %}
+
+        </div>
+    </section>
+
+{% endblock main_content %}
