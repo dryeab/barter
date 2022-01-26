@@ -135,7 +135,7 @@ AUTH_USER_MODEL = 'user.User'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'barterethiopia@gmail.com'
-EMAIL_HOST_PASSWORD = 'barter@ethiopia1'
+EMAIL_HOST_PASSWORD = 'xxxxxxx'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
