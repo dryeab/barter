@@ -1,3 +1,4 @@
+from django.dispatch import receiver
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
@@ -14,33 +15,49 @@ def home(request):
     posts = Post.objects.all()
 
     if request.POST:
-        
-        req = Request.objects.get(id=request.POST['request_id'])
 
-        if request.POST['submit'] == 'accept':
-            req.status = 'accepted'
-            req.save()
-        elif request.POST['submit'] == 'reject':
-            req.delete()
+        if request.POST['submit'] == "send-offer":
+
+            post = Post.objects.get(id=request.POST['post'])
+            offer = Post.objects.get(id=request.POST['offer'])
+
+            Request.objects.create(
+                post=post,
+                receiver=post.poster,
+                offered=offer,
+                sender=offer.poster
+            )
+
+        else:
+            req = Request.objects.get(id=request.POST['request_id'])
+
+            if request.POST['submit'] == 'accept':
+                req.status = 'accepted'
+                req.save()
+            elif request.POST['submit'] == 'reject':
+                req.delete()
 
     elif request.GET.get('search'):
         text = request.GET['search']
         posts = posts.filter(commodity_name__icontains=text) \
             | posts.filter(description__icontains=text)
-    
+
     return render(request, 'home.html', context={'posts': posts, 'categories': Post.CATEGORIES})
+
 
 @login_required
 def edit_profile(request):
 
     if request.POST:
-        form = EditProfileForm(request.POST, request.FILES, instance=request.user)
+        form = EditProfileForm(
+            request.POST, request.FILES, instance=request.user)
 
         if form.is_valid():
             form.save()
             return redirect('home')
 
     return render(request, 'edit_profile.html', context={'form': EditProfileForm(instance=request.user)})
+
 
 @login_required
 def create_post(request):
@@ -52,8 +69,9 @@ def create_post(request):
             post.poster = request.user
             post.save()
             return redirect('home')
-            
+
     return render(request, 'post.html', context={'post': Post(), 'is_create': True})
+
 
 @login_required
 def edit_post(request, id):
@@ -72,6 +90,7 @@ def edit_post(request, id):
         except:
             return redirect('home')
 
+
 @login_required
 def delete_post(request, id):
 
@@ -82,6 +101,7 @@ def delete_post(request, id):
         pass
 
     return redirect('home')
+
 
 @login_required
 def others_profile(request, username):
@@ -97,28 +117,10 @@ def others_profile(request, username):
 
         return redirect('home')
 
-def send_request(request, post1, post2):
-    
-    post = Post.objects.get(id=post1)
-    offered = Post.objects.get(id=post2)
-
-    request = Request()
-
-    request.post = post
-    request.receiver = post.poster
-
-    request.offered = offered
-    request.sender = offered.poster
-
-    request.save()
-
+@login_required
 def post_detail(request, id):
-    return render(request, 'home.html')
-
-    
-
-
-
-    
-
-
+    try:
+        post = Post.objects.get(id=id)
+        return render(request, 'post_detail.html', {'post': post})
+    except:
+        return render(request, '403.html')

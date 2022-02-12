@@ -1,6 +1,6 @@
 from django.db import models
 
-from django.contrib.auth.models import AbstractBaseUser, UserManager, User
+from django.contrib.auth.models import AbstractBaseUser, UserManager
 from django.urls import reverse
 
 class User(AbstractBaseUser):
@@ -10,11 +10,12 @@ class User(AbstractBaseUser):
     fullname = models.CharField(max_length=50)
     username = models.CharField(unique=True, max_length=20, primary_key=True)
     email = models.EmailField(unique=True)
-    phone = models.CharField(max_length=10)
+    phone = models.CharField(unique=True, max_length=10)
     password = models.TextField()
 
-    profile_picture = models.ImageField(null=True, blank=True, upload_to="profile_pictures/")
-    bio = models.TextField(null=True, blank=True, max_length=250)
+    profile_picture = models.ImageField(upload_to="profile/", default='profile/default.png')
+    bio = models.TextField(null=True, blank=True, max_length=250, default="")
+    company = models.CharField(max_length=50, null=True, blank=True, default="")
 
     USERNAME_FIELD = "username"
     EMAIL_FIELD = "email"

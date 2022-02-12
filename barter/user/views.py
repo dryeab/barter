@@ -13,6 +13,7 @@ from .models import *
 def signup(request):
 
     if request.POST:
+
         signup_form = SignupForm(request.POST)
         
         if signup_form.is_valid():
@@ -47,6 +48,7 @@ def login_handler(request):
             error = True
 
     return render(request, 'login.html', context={'error': error, 'username': username})
+
 
 @login_required
 def logout_handler(request):
@@ -105,8 +107,6 @@ def send_code(request):
     message = f"Dear {name}, use {code} to signup."
     html_message = render_to_string('verification_message.html', context={
                                     'name': name, 'code': code})
-
-    print(subject, message, html_message)
 
     send_mail(subject,
               message,

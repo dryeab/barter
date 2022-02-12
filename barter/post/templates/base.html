@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,18 +12,127 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     {% block stylesheets %}{% endblock stylesheets %}
 </head>
+
 <body>
-    <header style="background: gray;">
-        <div class="logo">
-            <img src="" alt="Barter">
-        </div>
-        <div class="profile">
-            <img src="" alt="profile picture">
-            <a href={% url 'others_profile' user.username %}>{{user.username}}</a>
-        </div>
-        <div class="humberger">
-            humberger
-        </div>
+    <header class="sticky-top" >
+        <nav class="navbar shadow-lg navbar-expand-md navbar-light"  style="background-color: #1D4365;">
+            <div class="container-xxl">
+                <a href="#intro" class="navbar-brand">
+                    <span class="fw-bold d-flex text-light flex-column align-items-center  "><img class="rounded-circle"
+                            width="180px" height="90px" src="../static/images/logo.png"
+                            style="font-family: Rochester;">Barter</span>
+                </a>
+
+
+                <div class=" justify-content-ed " id="main-nav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item m-2">
+                            <span class="mb-5 ">
+                                <button class="btn btn-sm text-light" data-bs-toggle="modal"
+                                    data-bs-target="#reg-modal">
+                                    <div class="d-flex align-items-end">
+                                        <img class="rounded-circle" width="75px" height="64px"
+                                            src="../static/images/a little less like me.jpeg">
+                                        <span class="fw-bold ms-2 mb-4  ">@
+                                            <span>
+                                                <a href={% url 'others_profile' user.username %}>{{user.username}}</a>
+                                            </span>
+                                        </span>
+                                    </div>
+                                </button>
+                                <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modat-title"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog  modal-dialog-scrollable modal-dialog-centered">
+                                        <div class="modal-content ">
+                                            <div class="modal-header border-0 ">
+                                                <div class="modal-title">
+                                                    <div class="d-flex align-items-end">
+                                                        <img class="rounded-circle" width="60px" height="60px">
+                                                        <span class="fw-bold ms-2 mb-4 text-muted ">@
+                                                            <span>
+                                                                authenticated Employee
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn-close mb-5 me-1"
+                                                    data-bs-dismiss="modal" aria-label="close"></button>
+                                            </div>
+                                            <div class="modal-body text-center">
+                                                <a class="nav-link p-3 m-3 btn text-light btn-primary"
+                                                    th:href="@{/post}">Create
+                                                    New Post</a>
+
+                                                <a class="nav-link p-3 m-3 btn text-light  btn-primary">Edit
+                                                    Profile</a>
+                                                <a class="nav-link p-3 m-3 btn text-light  btn-primary"
+                                                    th:href="@{/logout}">Logout</a>
+                                                <a class="nav-link p-3 m-3 btn text-light  btn-danger"
+                                                    th:href="@{'/'+${userDetails.getUsername()}+'/EditCompany/deleteProfile'}">Delete
+                                                    Profile</a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </span>
+                        </li>
+
+                        <li class="nav-itemn  ">
+                            <span>
+                                <button class="btn  mt-4 btn-sm " data-bs-toggle="modal" data-bs-target="#reg-modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="30" fill="white"
+                                        class="bi bi-list" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                                    </svg>
+                                </button>
+                                <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modat-title"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog  modal-dialog-scrollable modal-dialog-centered">
+                                        <div class="modal-content ">
+                                            <div class="modal-header border-0 ">
+                                                <div class="modal-title">
+                                                    <div class="d-flex align-items-end">
+                                                        <img class="rounded-circle" width="60px" height="60px">
+                                                        <span class="fw-bold ms-2 mb-4 ">@
+                                                            <span>
+                                                                authenticated Employee
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn-close mb-5 me-1"
+                                                    data-bs-dismiss="modal" aria-label="close"></button>
+                                            </div>
+                                            <div class="modal-body text-center">
+                                                <a class="nav-link p-3 m-3 btn text-light btn-primary"
+                                                    th:href="@{/post}">Create New Post</a>
+
+                                                <a class="nav-link p-3 m-3 btn text-light  btn-primary"
+                                                    th:href="@{'/'+${userDetails.getUsername()}+'/EditCompany'}">Edit
+                                                    Profile</a>
+                                                <a class="nav-link p-3 m-3 btn text-light  btn-primary"
+                                                    th:href="@{/logout}">Logout</a>
+                                                <a class="nav-link p-3 m-3 btn text-light  btn-danger"
+                                                    th:href="@{'/'+${userDetails.getUsername()}+'/EditCompany/deleteProfile'}">Delete
+                                                    Profile</a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </span>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+     
+            
+       
     </header>
 
     <main>
@@ -36,4 +146,5 @@
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     {% block scripts %}{% endblock scripts %}
 </body>
+
 </html>

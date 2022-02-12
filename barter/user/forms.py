@@ -6,6 +6,3 @@ class SignupForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ["username", "fullname", "email", "phone", "password"]
-
-
-

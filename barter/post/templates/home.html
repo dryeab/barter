@@ -3,105 +3,244 @@
 {% load static %}
 
 {% block title %}
-   Barter - {{ request.user.fullname|capfirst}}
+Barter - {{ request.user.fullname|capfirst}}
 {% endblock title %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock stylesheets %}
 
+
 {% block main_content %}
+<!-- <div class="container"> -->
+<div class="row g-0">
 
-    <section class="left">
-        <form action="" method="get">
-            <input type="search" name="search" id="search">
-            <input type="submit" value="Search" style="display: none;">
-        </form>
-        <h2>Categories</h2>
-        {% for _, category in categories %}
-            <p> {{category|capfirst}} </p>
-        {% endfor %}
-    </section>
+    <div class=" col-3">
+        <div class="card position-fixed bg-light shadow-lg me-5">
+            <section class="left">
+                <div class="text-center mt-4 px-3">
+                    <form action="" method="get">
+                        <input class="form-control rounded-pill" type="search" name="search" id="search"
+                            placeholder="Search" style="background-color:#C4C4C4;">
+                        <input type="submit" value="Search" style="display: none;">
+                    </form>
+                </div>
 
-    {% block middle %}
-    
+                <div class="mt-4">
+                    <div class="text-start ps-3 me-5 rounded-3" style="background-color: #00BBF6;">
+                        <h4 class="p-1">Categories<h4>
+                    </div>
+                    <div class="d-flex flex-column align-items-center ">
+                        <div class="d-flex flex-column  justify-content-start">
+                            {% for _, category in categories %}
+
+                            <p> {{category|capfirst}} </p>
+
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+
+            </section>
+        </div>
+
+    </div>
+
+    <div class=" col-6">
+        {% block middle %}
+
         <section class="middle">
 
-            <div class="post-button">
+            <div class="btn-lg btn-primary mb-3">
                 Click here to post
             </div>
 
             {% if not posts %}
 
-                <p>Your search did not match any posts.</p>
-                <p>Suggestions:</p>
-                <ul>
-                    <li>Make sure that all words are spelled correctly.</li>
-                    <li>Try different keywords.</li>
-                    <li>Try more general keywords.</li>
-                </ul>
+            <p>Your search did not match any posts.</p>
+            <p>Suggestions:</p>
+            <ul>
+                <li>Make sure that all words are spelled correctly.</li>
+                <li>Try different keywords.</li>
+                <li>Try more general keywords.</li>
+            </ul>
 
             {% else %}
-                
-                {% for post in posts %}
-                    <div class="post" style="border-radius: 10px; box-shadow: 0 0 10px gray;">
-                        <div class="poster">Poster: {{ post.poster.fullname|capfirst}}</div>
-                        <div class="category">Category: {{ post.category|capfirst }} </div>
-                        <div class="name">Commodity Name: {{ post.commodity_name }}</div>
-                        <div class="description">Description: {{ post.description }}</div>
-                        <img src="{{ post.image.url }}" alt="post image" style="width: 150px; height: 150px;">
+
+            {% for post in posts %}
+
+            <div class="card bg-light shadow-lg mb-5 mx-4">
+
+                <div class="card-body">
+                    <div class="card-title mb-0 d-flex justify-content-between">
+                        <span class="ms-3 mt-4">
+                            <img class="rounded-circle mb-3" src="" width="60px" height="60px" />
+
+                            <span class="m-1  ">
+                                <a href={% url 'others_profile' post.poster.username %}
+                                    style="text-decoration: none; color: black;">{{ post.poster.fullname }}</a>
+                            </span>
+
+                        </span>
+
+                        <span class="mb-5 mt-3 me-3 ">
+                            <button class="btn fw-bold  btn-sm btn-light" data-bs-toggle="modal"
+                                data-bs-target="#reg-modal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                                </svg>
+                            </button>
+                            <form action="" method="post">
+                                <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modat-title"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog bg-light modal-dialog-scrollable modal-dialog-centered">
+                                        <div class="modal-content ">
+                                            <div class="modal-header border-0 ">
+                                                <div class="modal-title">
+                                                    <h1 class="ms-5  mt-3 ps-4">Select an item</h1>
+                                                </div>
+                                                <button type="button" class="btn-close mb-4 me" data-bs-dismiss="modal"
+                                                    aria-label="close"></button>
+                                            </div>
+
+                                            <div class="modal-body text-center">
+
+                                                {% csrf_token %}
+
+                                                <!-- Options to choose for an offer -->
+                                                {% for offer in request.user.posts.all %}
+                                                <input type="hidden" name="post" value="{{ post.id }}">
+                                                <input class="btn-check " type="radio" autocomplete="off"
+                                                    id="{{ offer.id }}" name="offer" value="{{ offer.id }}" />
+                                                <label class="btn " for="{{ offer.id }}">
+                                                    <div class=""><img class="img-fluid" src="{{ offer.image.url }}"
+                                                            style="max-height: 50%; max-width: 100%; border-radius: 4px" />
+                                                    </div>
+                                                    <div class="post-name">{{ offer.commodity_name|capfirst }} </div>
+                                                </label>
+
+                                                {% endfor %}
+
+                                            </div>
+                                            <div class="modal-footer border-0 justify-content-center">
+
+                                                <button type="submit" class="btn btn-lg btn-success" name="submit"
+                                                    value="send-offer">Send</button>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+
                     </div>
-                {% endfor %}
+                    </span>
+                </div>
+
+                <div class="commodity_name mb-1 ms-4">
+                    Name: {{ post.commodity_name }}
+                </div>
+
+                <div class="description ms-4">
+                    Description: {{ post.description }}
+                </div>
+
+                <div class="ms-2 me-5 mt-1 pe-5 fluid-content">
+                    <img class="img-fluid" src="{{ post.image.url }} " />
+                </div>
+                <div class="d-flex justify-content-center">
+                    <span class="mb-4 mt-1 ">Category: {{ post.category|capfirst }}</span>
+                </div>
+            </div>
+            {% endfor %}
             {% endif %}
 
         </section>
 
-    {% endblock middle %}
+        {% endblock middle %}
+    </div>
 
+    <div class="col-3 ">
+        <div class="card position-fixed bg-light ms-5">
 
-    <section class="right" style="background: gray;">
-
-        <div class="offers">
-
-            {% for request in user.received.all %}
-
-                {% if request.status == 'pending' %}
-
-                    <div class="request">
-
-                        <p><a href={% url 'others_profile' request.sender.username %}>{{request.sender.fullname|capfirst}}</a> wants to exchange 
-                            <a href={% url 'post_detail' request.offered.id %}> {{request.offered.commodity_name }}</a>
-                            with
-                            <a href={% url 'post_detail' request.post.id %}> {{request.post.commodity_name }}</a>.
-                        </p>
-
-                       <form action="" method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="request_id" value="{{ request.id }}">
-                            <button type="submit" name='submit' value="accept">ACCEPT</button>
-                            <button type="submit" name='submit' value="reject">REJECT</button>
-                       </form>
-                    </div>
-                {% endif %}
-            
-            {% endfor %}
-
-            {% for request in user.sent.all %}
-            
-                    {% if request.status == 'accepted' %}
-                        <div class="accepted">
-                            <a href={% url 'others_profile' request.post.poster.username %}>{{request.post.poster.fullname|capfirst}}</a> accepted your offer.
-                            <button>See Contact</button>
+                {% for request in user.received.all %}
+    
+                    {% if request.status == 'pending' %}
+    
+                        <div class="request">
+    
+                            <p><a href={% url 'others_profile' request.sender.username %}>{{request.sender.fullname|capfirst}}</a> wants to exchange 
+                                <a href={% url 'post_detail' request.offered.id %}> {{request.offered.commodity_name }}</a>
+                                with
+                                <a href={% url 'post_detail' request.post.id %}> {{request.post.commodity_name }}</a>.
+                            </p>
+    
+                           <form action="" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="request_id" value="{{ request.id }}">
+                                <button type="submit" name='submit' value="accept">ACCEPT</button>
+                                <button type="submit" name='submit' value="reject">REJECT</button>
+                           </form>
                         </div>
                     {% endif %}
-
-            {% endfor %}
+                
+                {% endfor %}
+    
+                {% for request in user.sent.all %}
+                
+                        {% if request.status == 'accepted' %}
+                            <div class="accepted">
+                                <a href={% url 'others_profile' request.post.poster.username %}>{{request.post.poster.fullname|capfirst}}</a> accepted your offer.
+                                
+                                <button class="btn fw-bold  btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#reg-modal-contact">
+                                  See contact
+                                </button>
+    
+                                {% comment %} <div class="modal fade" id="reg-modal-contact" tabindex="-1" aria-labelledby="modat-title" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                      <div class="modal-header border-0 ">
+                                        <div class="modal-title">
+                                          <h1 class="ms-5 mt-3 ps-4">Contact Info</h1>
+                                        </div>
+                                        <button type="button" class="btn-close mb-4 me" data-bs-dismiss="modal"
+                                          aria-label="close"></button>
+                                      </div>
+    
+                                      <div class="modal-body text-center">
+                                        <div class="phone">
+                                          Phone: {{ request.post.poster.phone }}
+                                       
+                                        </div>
+                                        <div class="email">
+                                          Email: {{ request.post.poster.email }}
+                                        </div>
+                                      </div>
+    
+                                    </div>
+    
+                                  </div>
+                                </div> {% endcomment %}
+                            </div>
+                        {% endif %}
+    
+                {% endfor %}
 
         </div>
-    </section>
+
+    </div>
+
+</div>
+<!-- </div> -->
 
 {% endblock main_content %}
 
 {% block scripts %}
-    <script src="{% static 'js/home.js' %}"></script>
+<script src="{% static 'js/home.js' %}"></script>
 {% endblock scripts %}

@@ -13,4 +13,4 @@ class PostForm(forms.ModelForm):
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
-        fields = ["fullname", "phone", "profile_picture", "bio"]
+        fields = ["fullname", "phone", "profile_picture", "bio", "company"]

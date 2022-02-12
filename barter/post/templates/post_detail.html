@@ -1,69 +1,88 @@
-{% load static %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ user.fullname }}'s post</title>
-</head>
-<body>
+{% block title %}{{ post.poster.fullname|capfirst }}'s post{% endblock title %}
 
-    <header>
-        <div class="logo">
-            Barter
-        </div>
-        <div class="title">
-            {% if is_create %}
-                <h1> Create a post</h1>
-            {% else %}
-                <h1>Edit your post</h1>
-            {% endif %}
-        </div>
-    </header>
+{% block main_content %}
 
-    <main>
-        <form action="" method="post" enctype="multipart/form-data">
+<div class="card bg-light shadow-lg">
+    
+    <div class="card-body p-0">
+      <div class="card-title d-flex justify-content-between">
+        <span class="m-3 mt-4">
+          <img class="rounded-circle mb-3" src="{{ post.poster.profile_picture.url }}" width="60px" height="60px" />
 
-            <div class="category">
-                <label for="category">Category: </label>
-                <select name="category" required id="category">
-                    <option selected value="{{ post.category }}">{{ post.category|capfirst}}</option>
-                    {% for value, name in post.CATEGORIES %}
-                        <option value="{{value}}">{{name}}</option>
-                    {% endfor %}
-                </select>
+          <span class="m-1  mb-5">
+            <a href={% url 'others_profile' post.poster.username %} style="text-decoration: none; color: black;">{{ post.poster.fullname }}</a>
+          </span>
+
+        </span>
+
+        <span class="mb-5 mt-3 me-3 ">
+          <button class="btn fw-bold  btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#reg-modal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+              viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+            </svg>
+          </button>
+          <form action="" method="post">
+            <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modat-title" aria-hidden="true">
+              <div class="modal-dialog bg-light modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content ">
+                  <div class="modal-header border-0 ">
+                    <div class="modal-title">
+                      <h1 class="ms-5  mt-3 ps-4">Select an item</h1>
+                    </div>
+                    <button type="button" class="btn-close mb-4 me" data-bs-dismiss="modal"
+                      aria-label="close"></button>
+                  </div>
+
+                  <div class="modal-body text-center">
+
+                      {% csrf_token %}
+                      
+                      <!-- Options to choose for an offer -->
+                      {% for offer in request.user.posts.all %}
+                        <input type="hidden" name="post" value="{{ post.id }}">
+                        <input class="btn-check " type="radio" autocomplete="off" id="{{ offer.id }}" name="offer" value="{{ offer.id }}" />
+                        <label class="btn " for="{{ offer.id }}">
+                          <div class=""><img class="img-fluid" src="{{ offer.image.url }}" style="max-height: 50%; max-width: 100%; border-radius: 4px" /></div>
+                          <div class="post-name">{{ offer.commodity_name|capfirst }} </div>
+                        </label>
+
+                      {% endfor %}
+
+                  </div>
+                  <div class="modal-footer border-0 justify-content-center">
+
+                    <button type="submit" class="btn btn-lg btn-success" name="submit" value="send-offer">Send</button>
+
+                  </div>
+
+                </div>
+
+              </div>
             </div>
+          </form>
+          
+      </div>
+      </span>
+    </div>
     
-            <div class="commodity_name">
-                <input type="text" name="commodity_name" maxlength="50" required id="commodity_name" value="{{ post.commodity_name }}" placeholder="Commodity Name">
-            </div>
-    
-            <div class="description">
-                <textarea name="description" cols="40" rows="10" maxlength="500" required id="description"> {{ post.description }} </textarea>
-            </div>
-    
-            <div class="image">
-                {% if post.image %}
-                    <img src="{{ post.image.url }}" alt="post image">
-                {% endif %}
-                <input type="file" name="image" accept="image/*" required id="image">
-            </div>
-    
-            {% if is_create %}
-                <input type="submit" value="Post">
-            {% else %}
-                <input type="submit" value="Edit">
-            {% endif %}
-            
-            {% csrf_token %}
-    
-        </form>
-    </main>
+    <div class="commodity_name m-3">
+        {{ post.commodity_name }}
+    </div>
 
-    <footer>
-        All rights reserved, Barter
-    </footer>
-</body>
-</html>
+    <div class="description m-3">
+        {{ post.description }}
+    </div>
+
+    <div class="m-4 mb-2">
+      <img class="img-fluid" src="{{ post.image.url }} "/>
+    </div>
+    <div class="d-flex justify-content-center">
+      <span class="mb-3 fw-bold">Category: {{ post.category|capfirst }}</span>
+    </div>
+  </div>
+
+{% endblock main_content %}
