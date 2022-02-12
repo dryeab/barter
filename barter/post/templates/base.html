@@ -44,7 +44,7 @@
                                         </span>
                                     </div>
                                 </button>
-                                <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modat-title"
+                                <div style="z-index:100; " class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="modat-title"
                                     aria-hidden="true">
                                     <div class="modal-dialog  modal-dialog-scrollable modal-dialog-centered">
                                         <div class="modal-content ">
@@ -82,7 +82,7 @@
                             </span>
                         </li>
 
-                        <li class="nav-itemn  ">
+                        <li class="nav-itemn">
                             <span>
                                 <button class="btn  mt-4 btn-sm " data-bs-toggle="modal" data-bs-target="#reg-modal">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="30" fill="white"
@@ -121,7 +121,6 @@
                                                 <a class="nav-link p-3 m-3 btn text-light  btn-danger"
                                                     th:href="@{'/'+${userDetails.getUsername()}+'/EditCompany/deleteProfile'}">Delete
                                                     Profile</a>
-
                                             </div>
                                         </div>
                                     </div>
