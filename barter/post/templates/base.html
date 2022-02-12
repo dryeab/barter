@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <header class="sticky-top" >
+    <header class="sticky-tp">
         <nav class="navbar shadow-lg navbar-expand-md navbar-light"  style="background-color: #1D4365;">
             <div class="container-xxl">
                 <a href="#intro" class="navbar-brand">
@@ -31,11 +31,15 @@
                                 <button class="btn btn-sm text-light" data-bs-toggle="modal"
                                     data-bs-target="#reg-modal">
                                     <div class="d-flex align-items-end">
-                                        <img class="rounded-circle" width="75px" height="64px"
-                                            src="../static/images/a little less like me.jpeg">
-                                        <span class="fw-bold ms-2 mb-4  ">@
+                                        <img class="rounded-circle" width="50px" height="50px"
+                                         src="{{ request.user.profile_picture.url }}"
+                                         >
+                                        <span class="fw-bold ms-2 mb-3">
                                             <span>
-                                                <a href={% url 'others_profile' user.username %}>{{user.username}}</a>
+                                                <a href={% url 'others_profile' user.username %}
+                                                    style="text-decoration: none; color: white;">
+                                                        {{user.fullname|capfirst}}
+                                                </a>
                                             </span>
                                         </span>
                                     </div>

@@ -16,7 +16,7 @@ Barter - {{ request.user.fullname|capfirst}}
 <div class="row g-0">
 
     <div class=" col-3">
-        <div class="card position-fixed bg-light shadow-lg me-5">
+        <div class="card position-fixed bg-light shadow-lg me-3">
             <section class="left">
                 <div class="text-center mt-4 px-3">
                     <form action="" method="get">
@@ -76,7 +76,7 @@ Barter - {{ request.user.fullname|capfirst}}
                 <div class="card-body">
                     <div class="card-title mb-0 d-flex justify-content-between">
                         <span class="ms-3 mt-4">
-                            <img class="rounded-circle mb-3" src="" width="60px" height="60px" />
+                            <img class="rounded-circle mb-3" src="{{ post.poster.profile_picture.url }}" width="60px" height="60px" />
 
                             <span class="m-1  ">
                                 <a href={% url 'others_profile' post.poster.username %}
@@ -166,6 +166,9 @@ Barter - {{ request.user.fullname|capfirst}}
         {% endblock middle %}
     </div>
 
+
+   {% comment %} <section > {% endcomment %}
+
     <div class="col-3 ">
         <div class="card position-fixed bg-light ms-5">
 
@@ -236,6 +239,7 @@ Barter - {{ request.user.fullname|capfirst}}
 
     </div>
 
+   {% comment %} </section> {% endcomment %}
 </div>
 <!-- </div> -->
 
