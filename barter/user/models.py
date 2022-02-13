@@ -10,7 +10,7 @@ class User(AbstractBaseUser):
     fullname = models.CharField(max_length=50)
     username = models.CharField(unique=True, max_length=20, primary_key=True)
     email = models.EmailField(unique=True)
-    phone = models.CharField(unique=True, max_length=10)
+    phone = models.CharField(max_length=10)
     password = models.TextField()
 
     profile_picture = models.ImageField(upload_to="profile/", default='profile/default.png')

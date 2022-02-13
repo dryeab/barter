@@ -8,7 +8,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Barter - {{ request.user.firstName|capfirst}}{% endblock title %}</title>
-    {% comment %} <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rochester&display=swap"> {% endcomment %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     {% block stylesheets %}{% endblock stylesheets %}
@@ -16,28 +15,27 @@
 
 <body>
     <header class="sticky-top">
-        <nav class="navbar shadow-lg navbar-light"  style="background-color: #1D4365;">
+        <nav class="navbar shadow-lg  navbar-light" style="background-color: #1D4365;">
             <div class="container-xxl">
-                <a href="#intro" class="navbar-brand">
+                <a href={% url 'home' %} class="navbar-brand">
                     <span class="fw-bold d-flex text-light flex-column align-items-center  "><img class="rounded-circle"
-                            width="120px" height="60px" src="../static/images/logo.png"
+                            width="120px" height="60px" src="{% static 'images/logo.png' %}"
                             style="font-family: Rochester;">Barter</span>
                 </a>
-                <div class=" justify-content-ed " id="main-nav">
-                    <ul class="navbar-nav">
+                <div class=" " id="main-nav">
+                    <ul class="navbar-nav d-flex flex-row">
                         <li class="nav-item m-2">
                             <span class="mb-5 ">
                                 <button class="btn btn-sm text-light" data-bs-toggle="modal"
                                     data-bs-target="#reg-modal">
                                     <div class="d-flex align-items-end">
-                                        <img class="rounded-circle" width="50px" height="50px"
-                                         src="{{ request.user.profile_picture.url }}"
-                                         >
                                         <span class="fw-bold ms-2 mb-3">
                                             <span>
                                                 <a href={% url 'others_profile' user.username %}
                                                     style="text-decoration: none; color: white;">
-                                                        {{user.firstName|capfirst}}
+                                                        <img class="rounded-circle" width="50px" height="50px"
+                                                            src="{{ request.user.profile_picture.url }}">
+                                                                 {{user.firstName|capfirst}}
                                                 </a>
                                             </span>
                                         </span>
@@ -80,51 +78,56 @@
                             </span>
                         </li>
 
-                        <li class="nav-itemn">
-                        
-<span>
-                <button class="btn " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                    aria-controls="offcanvasRight"> <svg xmlns="http://www.w3.org/2000/svg" width="50" height="30"
-                        fill="white" class="bi bi-list" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-                    </svg></button>
+                        <li class="nav-itemn mt-3">
 
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
-                    aria-labelledby="offcanvasRightLabel">
-                    <div class="offcanvas-header">
+                            <span>
+                                <button class="btn " type="button" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"> <svg
+                                        xmlns="http://www.w3.org/2000/svg" width="50" height="30" fill="white"
+                                        class="bi bi-list" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                                    </svg></button>
 
-                        <h5 id="offcanvasRightLabel"></h5>
-                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
+                                <div class="offcanvas bg-light offcanvas-end" tabindex="-1" id="offcanvasRight"
+                                    aria-labelledby="offcanvasRightLabel">
+                                    <div class="offcanvas-header">
 
-                    </div>
-                    <div class="offcanvas-body ">
-                        <div class="d-flex flex-column justify-content-center align-items-center">
-                            <img class="rounded-circle mb-4" width="80px" height="80px">
-                            <span class="fw-bold ms-2 mb-4 ">@
-                                <span>
-                                    authenticated Employee
-                                </span>
+                                        <h5 id="offcanvasRightLabel"></h5>
+                                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                            aria-label="Close"></button>
+
+                                    </div>
+                                    <div class="offcanvas-body ">
+                                        <div class="d-flex flex-column justify-content-center align-items-center">
+                                            <img class="rounded-circle mb-4" width="80px" height="80px" src="{{ request.user.profile_picture.url }}">
+                                            <span class="fw-bold ms-2 mb-4 ">
+                                                <span>
+                                                    {{request.user.fullname|title}}
+                                                </span>
+                                            </span>
+                                        </div>
+                                        
+                                        <div class=" text-center">
+                                            <a class="nav-link p-3 m-3 btn text-light btn-primary"
+                                                href={% url 'post' %}>Create New
+                                                Post</a>
+                                            
+                                            <a class="nav-link p-3 m-3 btn text-light  btn-primary"
+                                                href={% url 'others_profile' request.user.username %}>Edit
+                                                Profile</a>
+                                            
+                                            <a class="nav-link p-3 m-3 btn text-light  btn-primary"
+                                                href={% url 'logout' %}>Logout</a>
+                                            
+                                            <a class="nav-link p-3 m-3 btn text-light  btn-danger"
+                                                href={% url 'delete_profile' %}>Delete
+                                                Profile</a>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </span>
-                        </div>
-                        <div class=" text-center">
-                            <a class="nav-link p-3 m-3 btn text-light btn-primary" th:href="@{/post}">Create New
-                                Post</a>
-
-                            <a class="nav-link p-3 m-3 btn text-light  btn-primary"
-                                th:href="@{'/'+${userDetails.getUsername()}+'/EditCompany'}">Edit
-                                Profile</a>
-                            <a class="nav-link p-3 m-3 btn text-light  btn-primary" th:href="@{/logout}">Logout</a>
-                            <a class="nav-link p-3 m-3 btn text-light  btn-danger"
-                                th:href="@{'/'+${userDetails.getUsername()}+'/EditCompany/deleteProfile'}">Delete
-                                Profile</a>
-
-                        </div>
-                        ...
-                    </div>
-                </div>
-            </span>
                         </li>
 
 
@@ -132,18 +135,13 @@
                 </div>
             </div>
         </nav>
-     
-            
-       
+
     </header>
 
     <main>
         {% block main_content %}{% endblock main_content %}
     </main>
 
-    <footer style="background: gray;">
-        &copy; 2022, Barter. All Rights Reserved.
-    </footer>
     <script src="{% static 'js/base.js' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     {% block scripts %}{% endblock scripts %}

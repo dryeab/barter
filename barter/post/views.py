@@ -41,6 +41,10 @@ def home(request):
         text = request.GET['search']
         posts = posts.filter(commodity_name__icontains=text) \
             | posts.filter(description__icontains=text)
+            
+    elif request.GET.get('category'):
+        category = request.GET['category']
+        posts = posts.filter(category=category)
 
     return render(request, 'home.html', context={'posts': posts, 'categories': Post.CATEGORIES})
 
@@ -54,7 +58,7 @@ def edit_profile(request):
 
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('edit_profile')
 
     return render(request, 'edit_profile.html', context={'form': EditProfileForm(instance=request.user)})
 
@@ -86,9 +90,11 @@ def edit_post(request, id):
     else:
         try:
             post = Post.objects.get(id=id)
+            if request.user.username != post.poster.username:
+                raise Exception('User try to edit others post')
             return render(request, 'post.html', context={'post': post, 'is_create': False})
         except:
-            return redirect('home')
+            return render(request, '403.html')
 
 
 @login_required
@@ -119,6 +125,21 @@ def others_profile(request, username):
 
 @login_required
 def post_detail(request, id):
+
+    if request.POST:
+
+        if request.POST['submit'] == "send-offer":
+
+            post = Post.objects.get(id=request.POST['post'])
+            offer = Post.objects.get(id=request.POST['offer'])
+
+            Request.objects.create(
+                post=post,
+                receiver=post.poster,
+                offered=offer,
+                sender=offer.poster
+            )
+
     try:
         post = Post.objects.get(id=id)
         return render(request, 'post_detail.html', {'post': post})
