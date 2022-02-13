@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-Barter - {{ request.user.fullname|capfirst}}
+    Barter - {{ request.user.firstName|capfirst}}
 {% endblock title %}
 
 {% block stylesheets %}
@@ -78,7 +78,7 @@ Barter - {{ request.user.fullname|capfirst}}
                         <span class="ms-3 mt-4">
                             <img class="rounded-circle mb-3" src="{{ post.poster.profile_picture.url }}" width="60px" height="60px" />
 
-                            <span class="m-1  ">
+                            <span class="m-1 mb-5">
                                 <a href={% url 'others_profile' post.poster.username %}
                                     style="text-decoration: none; color: black;">{{ post.poster.fullname }}</a>
                             </span>

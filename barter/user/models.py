@@ -27,6 +27,9 @@ class User(AbstractBaseUser):
     
     def __str__(self):
         return self.fullname.title()
+    
+    def firstName(self):
+        return self.fullname.split()[0]
 
 
 class Verification(models.Model):
