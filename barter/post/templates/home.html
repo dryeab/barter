@@ -18,9 +18,8 @@ Barter - {{ request.user.firstName|capfirst}}
 
     <!-- categories -->
 
-
-    <div class=" col-3 d-flex justify-content-center col-lg-2">
-        <div class="card position-sticky bg-light shadow-lg  py-4  "
+    <div class=" col-3  d-flex justify-content-center col-lg-2">
+        <div class="card shadow position-sticky bg-light  py-4   "
             style="height: 30vh ; position: sticky;top: 116px; height: fit-content; ">
 
             <div class="text-center mt-4 px-3">
@@ -61,7 +60,9 @@ Barter - {{ request.user.firstName|capfirst}}
         {% block middle %}
 
         <a href="/post" class="btn mt-2  mb-3 d-grid mx-4 rounded text-center p-3  btn-primary mb-3 ">
-            Click here to post
+            <h5>
+                Click here to post
+            </h5>
         </a>
 
 
@@ -113,7 +114,7 @@ Barter - {{ request.user.firstName|capfirst}}
                             <form action="" method="post">
                                 <div class="modal fade" id="offer-modal" tabindex="-1" aria-labelledby="modal-title"
                                     aria-hidden="true">
-                                    <div class="modal-dialog rounded  modal-dialog-scrollable modal-dialog-centered">
+                                    <div class="modal-dialog   modal-dialog-scrollable modal-dialog-centered">
                                         <div class="modal-content ">
                                             <div class="modal-header  ">
                                                 <div class=" ms-5 modal-title">
@@ -192,10 +193,10 @@ Barter - {{ request.user.firstName|capfirst}}
             <!-- offers -->
 
 
-            <div class="card bg-light card-scrollable  ms-4"
+            <div class="card shadow bg-light card-scrollable  ms-2"
                 style="height: 30vh ; position: sticky;top: 116px; overflow-y: scroll; ">
 
-                <div class=" text-start ps-3 p-1 me-5 rounded-3" style="background-color: #00BBF6;">
+                <div class=" text-start ps-3 p-1 mb-2 ms-5 rounded-3" style="background-color: #00BBF6;">
 
                     <h5>Offers</h5>
 
@@ -233,12 +234,12 @@ Barter - {{ request.user.firstName|capfirst}}
 
             <!-- Notification -->
 
-            <div class="card bg-light ms-4"
+            <div class="card shadow bg-light ms-2"
                 style="height: 30vh ; position: sticky;top: 400px; overflow-y: scroll; z-index: 1080; ">
 
-                <div class=" text-start ps-3 p-1 me-5 rounded-3" style="background-color: #00BBF6;">
+                <div class=" text-start ps-3 p-1 ms-5 mb-2 rounded-3" style="background-color: #00BBF6;">
 
-                    <h5>Notification<h5>
+                    <h5>Notifications<h5>
 
                 </div>
 
@@ -249,7 +250,7 @@ Barter - {{ request.user.firstName|capfirst}}
                 <div class="accepted">
 
 
-                    <div class="ms-2">
+                    <div class="ms-5">
                         <a href={% url 'others_profile' request.post.poster.username %}
                             style="text-decoration: none; ">{{request.post.poster.firstName|capfirst}}</a> accepted
                         your
@@ -268,20 +269,23 @@ Barter - {{ request.user.firstName|capfirst}}
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header border-0 ">
-                                    <div class="modal-title">
+                                    <div class=" ms-5 modal-title">
                                         <h1 class="ms-5 mt-3 ps-4">Contact Info</h1>
                                     </div>
-                                    <button type="button" class="btn-close mb-4 me" data-bs-dismiss="modal"
+                                    <button type="button" class="btn-close mb-4 me-1" data-bs-dismiss="modal"
                                         aria-label="close"></button>
                                 </div>
                                 <div class="modal-body text-center">
-                                    <div class="phone">
-                                        Phone: {{ request.post.poster.phone }}
+                                    <h4 class="phone mb-3">
+                                        Tel: {{ request.post.poster.phone }}
 
-                                    </div>
-                                    <div class="email">
+                                    </h4>
+
+                                    <h4 class=" mb-4 email">
                                         Email: {{ request.post.poster.email }}
-                                    </div>
+                                    </h4>
+                                    <button type="button" class="btn btn-lg btn-success mb-4 px-5 py-2 "
+                                        data-bs-dismiss="modal" aria-label="close"> OK</button>
                                 </div>
 
                             </div>
