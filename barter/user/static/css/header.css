@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Rochester&display=swap");
+
+body {
+  margin: 0px;
+}
+header {
+  background-color: #1d4365;
+  margin-bottom: 5vh;
+}
+.header {
+  width: 25%;
+  margin: auto;
+  color: white;
+  display: flex;
+}
+.logo-image {
+  width: 45%;
+  margin-top: 2%;
+}
+.header p {
+  margin: auto 0px;
+  font-family: "Rochester", cursive;
+  font-size: 2em;
+  opacity: 0.8;
+}

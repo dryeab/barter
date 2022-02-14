@@ -2,84 +2,111 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Barter - Sign Up</title>
-    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-  </head>
-  <body>
 
-    <header>
-      <div class="header">
-        <img class="logo-image" src="{% static 'images/logo.png' %}" alt="logo">
-        <p>Barter</p>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barter - Sign Up</title>
+  <link rel="stylesheet" href="{% static 'css/header.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+
+<body class="vh-100">
+
+  <header>
+    <div class="header">
+      <img class="logo-image" src="{% static 'images/logo.png' %}" alt="logo">
+      <p>Barter</p>
+    </div>
+  </header>
+
+
+  <div class="row g-0 align-items-center justify-content-center"
+    style=" margin-top: 160px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">
+    <div class="col-10 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+      <div style="background:#fcf8f8; border-radius: 35px;" class="card  py-3 px-2 ">
+        <div class="py-4 px-4 card-body text-center ">
+
+
+
+          <form action="" method="post">
+
+            <div id="data">
+              <div class="card-title text-center font-weight-bold mb-2 ">
+                <h2 style="font-family:Verdana, Geneva, Tahoma, sans-serif;">Create an account</h2>
+              </div>
+              <div class="mt-3">
+                <input style="background-color: #C4C4C4 ;" class="form-control rounded-pill" type="text" name="fullname"
+                  id="fullname" placeholder="Full Name" required />
+                <div class="help fullname"></div>
+              </div>
+
+              <div class="mt-3">
+                <input style="background-color: #C4C4C4 ;" class="form-control rounded-pill" type="text" name="username"
+                  id="username" placeholder="Username" required />
+                <br>
+                <div class="help username"></div>
+              </div>
+
+              <div class="mt-3">
+                <input style="background-color: #C4C4C4 ;" class="form-control rounded-pill" type="email" name="email"
+                  id="email" placeholder="Email" required />
+                <div class="help email"></div>
+              </div>
+
+              <div class="mt-3">
+                <input style="background-color: #C4C4C4 ;" class="form-control rounded-pill" type="tel" name="phone"
+                  id="phone" placeholder="Phone Number" required>
+              </div>
+
+              <div class="mt-3">
+                <input style="background-color: #C4C4C4 ;" class="form-control rounded-pill" type="password"
+                  name="password" id="password" placeholder="Password" required />
+                <br>
+
+              </div>
+              <div class="mt-3">
+                <input style="background-color: #C4C4C4 ;" class="form-control rounded-pill" type="password"
+                  name="confirm" id="confirm" placeholder="Confirm password" required />
+                <div class="help password"></div>
+              </div>
+              <div class="d-flex align-items-center justify-content-center mt-2">
+
+                By signing up, you are agreeing to Barter's terms of
+                services and privacy policy.
+
+              </div>
+
+              <input class="btn btn-success mt-2" type="submit" value="Sign up" id="submit">
+              <div class="d-flex align-items-center justify-content-center m-2 ">
+                <p>Already have an account? <a href={% url 'login' %}>Sign in</a></p>
+
+              </div>
+            </div>
+
+            <div id="verification" style="display: none">
+              <input style="background-color: #C4C4C4 ;" class="form-control rounded-pill" id="code" type="text"
+                name="code" placeholder="Enter the code" required /><br>
+              <button class="btn-lg px-5 btn-outline-success " id="verify" type="submit"
+                value="Verify">Verify</button><br>
+              <span class="help verification"></span>
+            </div>
+
+            {% csrf_token %}
+
+          </form>
+
+        </div>
       </div>
-    </header>
+    </div>
+  </div>
 
-    <main>
-      <div class="formdiv d-flex flex-column align-items-center">
-        <h3>Create an account</h3>
-        <div>
-        <form action="" method="post">
-          <div id="data">
 
-            <div class="fullname">
-              <input type="text" name="fullname" id="fullname" placeholder="Full Name" required />
-              <span class="help fullname"></span>
-            </div>
 
-            <div class="username">
-              <input type="text" name="username" id="username" placeholder="Username" required />
-              <span class="help username"></span>
-            </div>
 
-            <div class="email">
-              <input type="email" name="email" id="email" placeholder="Email" required/>
-              <span class="help email"></span>
-            </div>
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'js/signup.js' %}"></script>
+</body>
 
-            <div class="phone">
-              <input type="tel" name="phone" id="phone" placeholder="Phone Number" required = True>
-            </div>
-            
-            <div class="password">
-              <input type="password" name="password" id="password" placeholder="Password" required/>
-              <br>
-            </div>
-            <div>
-              <input type="password" name="confirm" id="confirm" placeholder="Confirm password" required />
-              <span class="help password"></span>
-            </div>
-            
-            <p>
-              By signing up, you are agreeing to Barter's terms of 
-              services and privacy policy.
-            </p>
-            <div class="button">
-              <input type="submit" value="Sign up" id="submit">
-            </div>
-            <p>Already have an account?  <a href={% url 'login' %}>Sign in</a></p>
-          </div>
-
-          <div id="verification" style="display: none">
-            <input id="code" type="text" name="code" placeholder="Enter the code" required />
-            <input id="verify" type="submit" value="Verify"/>
-            <span class="help verification"></span>
-          </div>
-
-          {% csrf_token %}
-        </form>
-      </div>
-      </div>
-    </main>
-
-    <footer>
-      &copy; 2022, Barter. All Rights Reserved.
-    </footer>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/signup.js' %}"></script>
-  </body>
 </html>
