@@ -44,8 +44,13 @@
 
                             <div class="image m-4">
                                 {% if post.image %}
+<<<<<<< HEAD
+                                    <img src="{{ post.image.url }}" id="post_image" alt="post image" class="image shadow" width="100%">
+=======
                                 <img src="{{ post.image.url }}" id="post_image" alt="post image">
+>>>>>>> 24acdc4ae019e9ffbfcbec50f7e16dd97c62485b
                                 {% endif %}
+                                <br><br>
                                 <input type="file" name="image" accept="image/*" required id="input_image">
                             </div>
                             <div class="button">
