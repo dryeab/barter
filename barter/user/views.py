@@ -10,12 +10,17 @@ from django.template.loader import render_to_string
 from .forms import *
 from .models import *
 
+
+def index(request):
+    return render(request, 'index.html')
+
+
 def signup(request):
 
     if request.POST:
 
         signup_form = SignupForm(request.POST)
-        
+
         if signup_form.is_valid():
 
             user = signup_form.save(commit=False)
@@ -55,6 +60,7 @@ def logout_handler(request):
     logout(request)
     return redirect('login')
 
+
 def check_username(request):
 
     try:
@@ -63,6 +69,7 @@ def check_username(request):
         return JsonResponse({'exists': False})
 
     return JsonResponse({'exists': True})
+
 
 def check_email(request):
 
@@ -85,6 +92,7 @@ def check_code(request):
         is_correct = False
 
     return JsonResponse({'is_correct': is_correct})
+
 
 def send_code(request):
 
@@ -115,9 +123,10 @@ def send_code(request):
               html_message=html_message,
               )
 
+
 @login_required
 def delete_profile(request):
 
     request.user.delete()
-    
+
     return redirect('login')

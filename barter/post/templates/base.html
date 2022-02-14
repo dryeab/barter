@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Barter - {{ request.user.firstName|capfirst}}{% endblock title %}</title>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     {% block stylesheets %}{% endblock stylesheets %}
@@ -18,9 +19,9 @@
         <nav class="navbar shadow-lg  navbar-light" style="background-color: #1D4365;">
             <div class="container-xxl">
                 <a href={% url 'home' %} class="navbar-brand">
-                    <span class="fw-bold d-flex text-light flex-column align-items-center  "><img class="rounded-circle"
-                            width="120px" height="60px" src="{% static 'images/logo.png' %}"
-                            style="font-family: Rochester;">Barter</span>
+                    <span id="font" class=" d-flex fs- text-light flex-column align-items-center  "><img
+                            class="rounded-circle" width="120px" height="60px"
+                            src="{% static 'images/logo.png' %}">Barter</span>
                 </a>
                 <div class=" " id="main-nav">
                     <ul class="navbar-nav d-flex flex-row">

@@ -13,13 +13,13 @@
 {% block main_content %}
 
 <div class="row d-flex justify-content-center g-0">
-    <div class="col col-lg-2">
+    <div class="col col-md-6 col-lg-5 col-xl-3 ">
 
         <div class="position-fixed mt-2">
 
             <form action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="card bg-light shadow-lg mb-4">
+                <div class="card bg-light shadow-lg p-4 mb-4">
                     <div class="d-flex flex-column justify-content-center align-items-center " id="input_icon">
                         <img class="rounded-circle" width="120px" height="105px" id="profile_picture"
                             src="{{ request.user.profile_picture.url }}" alt="Profile picture">
@@ -68,13 +68,14 @@
         </div>
     </div>
 
-    <div class="col col-lg-4">
+    <div class="col col-md-6 col-lg-4 col-xl-">
 
         <section class="right">
 
-            <a href="/post" class="btn sticky-top  mb-3 d-grid mx-4 rounded text-center p-3  btn-primary mb-3 "
-                style="height: 5vh ; position: sticky;top: 116px; ">
-                Click here to post
+            <a href="/post" class="btn mt-2  mb-3 d-grid mx-4 rounded text-center p-3  btn-primary mb-3 ">
+                <h5>
+                    Click here to post
+                </h5>
             </a>
 
             <div class="posts">
@@ -90,7 +91,7 @@
                             <div class=" ms-3 m-1 p-0 d-flex flex-row  ">
                                 <img class="rounded-circle mt-3 " src="{{ post.poster.profile_picture.url }}"
                                     width="60px" height="60px" />
-                                <div class="mt-0 mb-5 d-flex flex-column m-2 mt-4">
+                                <div class="mt-0 mb-4 d-flex flex-column m-2 mt-4">
                                     <a class="fw-bold" href={% url 'others_profile' post.poster.username %}
                                         style="text-decoration: none; color: black; font-size: small; ">
                                         {{post.poster.fullname|title }}</a>
@@ -108,14 +109,24 @@
                         <b>Description:</b> {{ post.description }}
                     </div>
 
-                    <div class="ms-3 me-3 mt-1 fluid-content">
+                    <div class="ms-3 me-3 mt-3 fluid-content">
                         <img class="img-fluid" src="{{ post.image.url }} " />
                     </div>
 
                     <div class="d-flex justify-content-center">
                         <span class="mb-4 mt-1 "> <b>Category:</b> {{ post.category|title }}</span>
                     </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-lg mb-4 me-4 btn-outline-primary"><a href={% url 'edit_post' post.id %}
+                                style="color: black; text-decoration: none;">EDIT</a></button>
+
+                        <button class="btn btn-lg mb-4 btn-outline-danger"><a href={% url 'delete_post' post.id %}
+                                style="color: black; text-decoration: none;">DELETE</a></button>
+                    </div>
+
                 </div>
+
 
                 {% endfor %}
 

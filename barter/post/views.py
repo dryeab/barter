@@ -9,8 +9,12 @@ from .models import *
 
 User = get_user_model()
 
-@login_required
+
+# @login_required
 def home(request):
+
+    if request.user.is_anonymous:
+        return render(request, 'index.html')
 
     posts = Post.objects.all()
 
@@ -41,7 +45,7 @@ def home(request):
         text = request.GET['search']
         posts = posts.filter(commodity_name__icontains=text) \
             | posts.filter(description__icontains=text)
-            
+
     elif request.GET.get('category'):
         category = request.GET['category']
         posts = posts.filter(category=category)
@@ -114,14 +118,15 @@ def others_profile(request, username):
 
     try:
         user = User.objects.get(username=username)
+        print(username, user)
 
         if user.username == request.user.username:
             return redirect('edit_profile')
 
         return render(request, 'others_profile.html', context={'other': user, 'categories': Post.CATEGORIES})
     except:
-
         return redirect('home')
+
 
 @login_required
 def post_detail(request, id):
