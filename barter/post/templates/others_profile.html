@@ -7,7 +7,7 @@
 <section class="middle">
 
 
-    <div class="card bg-light shadow-lg mb-1 mx-4">
+    <div class="card bg-light shadow-lg mb-4 mx-4">
 
         <div class="card-body p-0">
             <div class="card-title mb-0 d-flex justify-content-between">
@@ -61,7 +61,7 @@
                 <div class=" ms-3 m-1 p-0 d-flex flex-row  ">
                     <img class="rounded-circle mt-3 " src="{{ post.poster.profile_picture.url }}" width="60px"
                         height="60px" />
-                    <div class="mt-0 mb-5 d-flex flex-column m-2 mt-4">
+                    <div class="mt-0 mb-3 d-flex flex-column m-2 mt-4">
                         <a class="fw-bold" href={% url 'others_profile' post.poster.username %}
                             style="text-decoration: none; color: black; font-size: small; ">
                             {{post.poster.fullname|title }}</a>
@@ -129,18 +129,18 @@
         </div>
 
         <div class="commodity_name mb-1 ms-4">
-            Name: {{ post.commodity_name }}
+            <span class="fw-bold"> Name: </span> {{ post.commodity_name }}
         </div>
 
         <div class="description ms-4">
-            Description: {{ post.description }}
+            <span class="fw-bold"> Description: </span> {{ post.description }}
         </div>
 
-        <div class="ms-3 me-3 mt-1 fluid-content">
+        <div class="ms-3 me-3 mt-3 fluid-content">
             <img class="img-fluid" src="{{ post.image.url }} " />
         </div>
         <div class="d-flex justify-content-center">
-            <span class="mb-4 mt-1 ">Category: {{ post.category|capfirst }}</span>
+            <span class="mb-4 mt-1 "><span class="fw-bold"> Category: </span> {{ post.category|capfirst }}</span>
         </div>
     </div>
     {% endfor %}

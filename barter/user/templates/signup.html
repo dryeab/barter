@@ -16,11 +16,16 @@
 <body class="vh-100">
 
   <header>
-    <div class="header">
-      <a href={% url 'home' %}>
-        <img class="logo-image" src="{% static 'images/logo.png' %}" alt="logo">
-        <p>Barter</p>
-      </a>
+    <div class="header d-flex  align-items-center justify-content-center ">
+      <div class="d-flex align-itmes-center justify-content-center">
+        <a class="d-flex align-itmes-center justify-content-center" style="text-decoration: none; color: white; "
+          href={% url 'home' %}>
+          <img class="logo-image " src="{% static 'images/logo.png' %}" alt="logo">
+          <p class="d-inline pt-2 ">Barter</p>
+        </a>
+
+      </div>
+
     </div>
   </header>
 

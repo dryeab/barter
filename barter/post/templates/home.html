@@ -165,18 +165,20 @@ Barter - {{ request.user.firstName|capfirst}}
                 </div>
 
                 <div class="commodity_name mb-1 ms-4">
-                    Name: {{ post.commodity_name }}
+                    <span class="fw-bold"> Name: </span> {{ post.commodity_name }}
                 </div>
 
                 <div class="description ms-4">
-                    Description: {{ post.description }}
+                    <span class="fw-bold"> Description: </span> {{ post.description }}
                 </div>
 
-                <div class="ms-3 me-3 mt-1 fluid-content">
+                <div class="ms-3 me-3 mt-3 fluid-content">
                     <img class="img-fluid" src="{{ post.image.url }} " />
                 </div>
                 <div class="d-flex justify-content-center">
-                    <span class="mb-4 mt-1 ">Category: {{ post.category|capfirst }}</span>
+                    <span class="mb-4 mt-1 ">
+                        <span class="fw-bold"> Category:
+                        </span> {{ post.category|capfirst}}</span>
                 </div>
             </div>
             {% endif %}
@@ -197,7 +199,7 @@ Barter - {{ request.user.firstName|capfirst}}
             <!-- offers -->
 
 
-            <div class="card shadow bg-light card-scrollable  ms-2"
+            <div class="card bg-light card-scrollable  ms-2"
                 style="height: 30vh ; position: sticky;top: 116px; overflow-y: scroll; ">
 
                 <div class=" text-start ps-3 p-1 mb-2 ms-5 rounded-3" style="background-color: #00BBF6;">
@@ -209,7 +211,7 @@ Barter - {{ request.user.firstName|capfirst}}
 
                 {% if request.status == 'pending' %}
 
-                <div class="request">
+                <div style="background-color: rgb(219, 243, 239);" class="request shadow mb-2 py-2">
 
                     <p class="ms-2"><a href={% url 'others_profile' request.sender.username %}
                             style="text-decoration: none;">{{request.sender.firstName|capfirst}}</a> wants to exchange
@@ -229,7 +231,7 @@ Barter - {{ request.user.firstName|capfirst}}
                             value="reject">REJECT</button>
                     </form>
                 </div>
-                <hr>
+
                 {% endif %}
 
                 {% endfor %}
@@ -251,7 +253,7 @@ Barter - {{ request.user.firstName|capfirst}}
 
                 {% if request.status == 'accepted' %}
 
-                <div class="accepted">
+                <div class="accepted request  mb-2 py-2 " style="background-color: rgb(219, 243, 239);">
 
 
                     <div class="ms-5">
