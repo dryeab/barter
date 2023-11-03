@@ -1,0 +1,35 @@
+# Django project files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.sqlite3
+
+# Local development settings
+settings_local.py
+
+# Static files
+/staticfiles/
+
+# Media files
+/media/
+
+# Virtual environment
+venv/
+env/
+
+# IDE-specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# Dependency management
+pip-lock.txt
+pipenv.lock
